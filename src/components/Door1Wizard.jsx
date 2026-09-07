@@ -4,9 +4,10 @@ import Footer from './Footer'
 import FieldInput from './FieldInput'
 import { SECTIONS, validateSection } from '../data/questionnaireSchema'
 
-export default function Door1Wizard({ onSubmit, onBack }) {
-  const [sectionIndex, setSectionIndex] = useState(0)
-  const [answers, setAnswers] = useState({})
+export default function Door1Wizard({ initialAnswers, initialSectionIndex = 0, onSubmit, onBack }) {
+  // Seeded from App so returning here from the Review screen keeps the answers.
+  const [sectionIndex, setSectionIndex] = useState(initialSectionIndex)
+  const [answers, setAnswers] = useState(initialAnswers ?? {})
   const [errors, setErrors] = useState({})
 
   const section = SECTIONS[sectionIndex]
@@ -90,7 +91,7 @@ export default function Door1Wizard({ onSubmit, onBack }) {
             </button>
             {isLast ? (
               <button onClick={handleSubmit} className="tc-btn-primary">
-                Submit
+                Review &rarr;
               </button>
             ) : (
               <button onClick={handleNext} className="tc-btn-primary">

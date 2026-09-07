@@ -11,13 +11,13 @@ export default function Footer() {
           </div>
         </div>
         <div className="text-right text-[10px] font-light tracking-[0.1em] text-stone leading-loose [&_a]:underline [&_a]:underline-offset-[3px] [&_a:hover]:text-chalk max-[768px]:text-left">
-          <div>ESRS / CSRD Aligned · Version 2.0</div>
+          <div>ESRS / CSRD Aligned · Version 3.0</div>
           <div>Supplier Programme · 2026</div>
           <div className="mt-2">Scope 3: 71% of total footprint · location-based · 2023 base year</div>
           <div className="mt-2">
             <a href="mailto:sustainability@thecorporate.com">sustainability@thecorporate.com</a>
           </div>
-          <div className="mt-2">No data entered in this portal is stored or transmitted.</div>
+          <div className="mt-2">Submissions are stored securely for review by The Corporate.</div>
         </div>
       </div>
       <div className="h-[0.5px] bg-white/[0.15] my-6 tc-page" />

@@ -14,8 +14,8 @@ export default function DoorSelection({ onSelectDoor1, onSelectDoor2, onBack }) 
           <p className="tc-subhead mb-4">Complete the Questionnaire</p>
           <h1 className="tc-h2 text-[clamp(26px,3.5vw,38px)] mb-4">Choose how you want to submit.</h1>
           <p className="tc-body text-graphite max-w-[640px] mb-14">
-            Both paths cover the same seven sections. Nothing you enter is stored or sent anywhere —
-            it stays in this browser tab until you close it.
+            Both paths cover the same six sections. Nothing is submitted until you review your
+            answers and confirm at the end.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[860px]">
