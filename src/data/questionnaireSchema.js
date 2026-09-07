@@ -1,5 +1,6 @@
 // Field structure derived directly from The_Corporate_Supplier_Questionnaire_2026.xlsx
-// (sheet "Supplier Assessment 2026"). Door 1's wizard and Door 2's parser both read
+// (sheet "Supplier Assessment 2026", v3.0 — Section 1 removed from the workbook, so the
+// wizard and the parser both start at S2). Door 1's wizard and Door 2's parser both read
 // this file as their single source of truth. If the workbook changes, regenerate
 // this schema and the parser together — see CLAUDE.md Business Rules.
 //
@@ -11,44 +12,6 @@
 export const YES_NO = ['Yes', 'No']
 
 export const SECTIONS = [
-  {
-    id: 'S1',
-    title: 'General Information & EcoVadis Bypass',
-    esrs: 'All ESRS',
-    fields: [
-      {
-        id: 's1_legal_name',
-        esrsRef: '—',
-        type: 'text',
-        label: 'Legal name and registered country of the responding entity.',
-        required: true,
-      },
-      {
-        id: 's1_contact',
-        esrsRef: '—',
-        type: 'text',
-        label: 'Primary contact name, title, and email address for this assessment.',
-        required: true,
-      },
-      {
-        id: 's1_ecovadis_bypass',
-        esrsRef: 'Bypass',
-        type: 'dropdown',
-        label:
-          'Do you hold a valid EcoVadis Sustainability Scorecard (issued within the last 12 months)? If YES: attach scorecard link in the Notes column and proceed directly to the Status column. Sections S2–S7 are not required.',
-        options: ['Yes — Scorecard Attached', 'No — Will Complete Questionnaire'],
-        required: true,
-      },
-      {
-        id: 's1_ecovadis_link',
-        esrsRef: '—',
-        type: 'text',
-        label: 'EcoVadis Scorecard Link (if applicable). Paste URL or attach document reference.',
-        required: false,
-        conditional: { field: 's1_ecovadis_bypass', equals: 'Yes — Scorecard Attached', required: true },
-      },
-    ],
-  },
   {
     id: 'S2',
     title: 'Climate & Decarbonisation',
@@ -306,19 +269,12 @@ export const SECTIONS = [
 
 export const ALL_FIELDS = SECTIONS.flatMap((s) => s.fields.map((f) => ({ ...f, sectionId: s.id })))
 
-export function isFieldRequired(field, answers) {
-  if (field.conditional) {
-    const controllingValue = answers[field.conditional.field]
-    if (controllingValue === field.conditional.equals) {
-      return field.conditional.required
-    }
-    return false
-  }
+export function isFieldRequired(field) {
   return !!field.required
 }
 
-export function validateField(field, value, answers) {
-  const required = isFieldRequired(field, answers)
+export function validateField(field, value) {
+  const required = isFieldRequired(field)
   const trimmed = typeof value === 'string' ? value.trim() : value
 
   if (required && (trimmed === undefined || trimmed === null || trimmed === '')) {
@@ -340,7 +296,7 @@ export function validateField(field, value, answers) {
 export function validateSection(section, answers) {
   const errors = {}
   section.fields.forEach((field) => {
-    const error = validateField(field, answers[field.id], answers)
+    const error = validateField(field, answers[field.id])
     if (error) errors[field.id] = error
   })
   return errors
