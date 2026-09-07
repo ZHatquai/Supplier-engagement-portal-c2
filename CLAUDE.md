@@ -35,14 +35,16 @@ SUPABASE_SERVICE_ROLE_KEY — Supabase: Project Settings → API → service_rol
 No anon key is used — the frontend never talks to Supabase directly. Both are read only inside the submission Netlify Function, never in code or any committed file.
 
 ## Supabase
-Project: "The corporate live build (New)" — does not exist yet. At the start of the next session, confirm this exact name with the builder, then create it via Supabase MCP before building anything. Region: EU (Frankfurt) — GDPR applies. Plan: Free — pauses after ~1 week without traffic; revisit if the tool goes into steady live use.
+Project: "The corporate live build (New)" — created by the builder and provisioned in session 2 (schema, functions, RLS). Do not create another one. Region: EU (Frankfurt) — GDPR applies. Plan: Free — pauses after ~1 week without traffic; revisit if the tool goes into steady live use.
+
+The project ref and URL are never written into this repo — it is public. They live in the Supabase dashboard and in the SUPABASE_URL Netlify environment variable only. Refer to the project by name in any doc or commit.
 
 Schema — authoritative until docs/supabase-setup.md exists:
 submissions: company_name, contact_name, contact_email, contact_phone, job_title, department, route (enum: ecovadis / questionnaire), ecovadis_link, questionnaire_answers (JSON), status (enum: active / superseded / needs_review), created_at
 
 RLS — never skip: submissions — anon has no read/insert/update/delete. All reads and writes go exclusively through the submission Netlify Function using the service role key.
 
-After setup, write docs/supabase-setup.md and update it at every save point touching the database: project name/ID/URL, plan, tables with fields/types, RLS per table, a note on the planned future internal-dashboard stack member, last-updated line. From then on it is the schema source of truth.
+docs/supabase-setup.md is the schema source of truth. Update it at every save point touching the database: project name (name only — never ref or URL), plan, tables with fields/types, RLS per table, a note on the planned future internal-dashboard stack member, last-updated line.
 
 ## Hard Rules
 - API keys never in any frontend file or GitHub commit. Always called through the server-side submission Netlify Function.
