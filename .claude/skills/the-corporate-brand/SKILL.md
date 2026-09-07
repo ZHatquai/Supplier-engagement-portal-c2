@@ -53,7 +53,9 @@ description: >
 | Name      | Hex       | CSS Variable  | Role                                        |
 |-----------|-----------|---------------|---------------------------------------------|
 | Ink       | #000000   | --tc-ink      | Primary text, logo, CTA fills               |
-| Stone     | #B6B09F   | --tc-stone    | Muted labels, borders, icons                |
+| Graphite  | #4A453B   | --tc-graphite | Muted text on light surfaces                |
+| Slate     | #8C8674   | --tc-slate    | Form-control borders, large numerals (≥24px)|
+| Stone     | #B6B09F   | --tc-stone    | Borders, icons, muted text on Ink only      |
 | Linen     | #EAE4D5   | --tc-linen    | Surface/card backgrounds                    |
 | Chalk     | #F2F2F2   | --tc-chalk    | Page background, alternate rows             |
 | White     | #FFFFFF   | --tc-white    | Document white, modal backgrounds           |
@@ -62,25 +64,55 @@ description: >
 ### CSS Custom Properties block (always include in projects)
 ```css
 :root {
-  --tc-ink:    #000000;
-  --tc-stone:  #B6B09F;
-  --tc-linen:  #EAE4D5;
-  --tc-chalk:  #F2F2F2;
-  --tc-white:  #FFFFFF;
+  --tc-ink:      #000000;
+  --tc-graphite: #4A453B;
+  --tc-slate:    #8C8674;
+  --tc-stone:    #B6B09F;
+  --tc-linen:    #EAE4D5;
+  --tc-chalk:    #F2F2F2;
+  --tc-white:    #FFFFFF;
 
   /* Semantic aliases */
   --tc-bg-page:      var(--tc-chalk);
   --tc-bg-surface:   var(--tc-linen);
   --tc-bg-elevated:  var(--tc-white);
   --tc-text-primary: var(--tc-ink);
-  --tc-text-muted:   var(--tc-stone);
+  --tc-text-muted:   var(--tc-graphite); /* muted text on Chalk / Linen / White */
+  --tc-text-muted-on-ink: var(--tc-stone); /* muted text on Ink backgrounds only */
+  --tc-text-numeral: var(--tc-slate);    /* decorative display numerals, ≥24px */
   --tc-border:       rgba(182, 176, 159, 0.35); /* Stone @ 35% */
   --tc-border-strong: var(--tc-stone);
+  --tc-border-input: var(--tc-slate);
 
   /* Accent */
   --tc-lime: #C8F135;
 }
 ```
+
+### The neutral ramp — which grey, on which background
+
+Stone is a **border and icon** colour. It is legible as text only against Ink,
+where it sits at 9.7:1. On Chalk, Linen, or White it lands near 2:1 and fails
+WCAG AA — muted is not the same as unreadable. The ramp exists so that "quiet
+text" never means "invisible text":
+
+| Surface                          | Muted text | Contrast | Borders |
+|----------------------------------|------------|----------|---------|
+| Ink #000000                      | Stone      | 9.7:1    | Stone @ 25–40% |
+| Chalk #F2F2F2                    | Graphite   | 8.5:1    | Stone @ 35% |
+| Linen #EAE4D5                    | Graphite   | 7.5:1    | Stone |
+| White #FFFFFF                    | Graphite   | 9.5:1    | Stone @ 35% |
+
+- Graphite is the muted text colour everywhere except on Ink. Section labels,
+  captions, field labels, helper text, table headers, timeline dates, secondary
+  card copy: all Graphite.
+- Slate is the one middle step. It is for form-control borders and for large
+  decorative display numerals (≥24px, where 3:1 is the AA threshold). Never for
+  body copy, labels, or any text under 24px. As text it clears 3:1 on White
+  (3.6:1) and Chalk (3.3:1) but not on Linen (2.9:1) — on Linen, numerals step
+  down to Graphite.
+- Never set text in Linen or Chalk on a light surface. A pale numeral on White
+  reads as a rendering fault, not as restraint.
 
 ### Acid Lime — Accent Usage Rules
 
@@ -160,9 +192,9 @@ padding-bottom: 2px;
 .tc-h1 { font-family: var(--tc-font-display); font-size: 48px; font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; color: var(--tc-ink); }
 .tc-h2 { font-family: var(--tc-font-display); font-size: 32px; font-weight: 400; line-height: 1.15; color: var(--tc-ink); }
 .tc-h3 { font-family: var(--tc-font-body); font-size: 18px; font-weight: 500; line-height: 1.3; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tc-ink); }
-.tc-subhead { font-family: var(--tc-font-body); font-size: 13px; font-weight: 500; line-height: 1.4; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tc-stone); }
+.tc-subhead { font-family: var(--tc-font-body); font-size: 13px; font-weight: 500; line-height: 1.4; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tc-text-muted); }
 .tc-body { font-family: var(--tc-font-body); font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--tc-ink); }
-.tc-label { font-family: var(--tc-font-body); font-size: 11px; font-weight: 400; line-height: 1.5; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tc-stone); }
+.tc-label { font-family: var(--tc-font-body); font-size: 11px; font-weight: 400; line-height: 1.5; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tc-text-muted); }
 ```
 
 ---
@@ -260,7 +292,7 @@ Base unit: **8px**
 ### Tables
 ```css
 .tc-table { width: 100%; border-collapse: collapse; font-family: var(--tc-font-body); font-size: 14px; }
-.tc-table th { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tc-stone); padding: 10px 12px; text-align: left; border-bottom: 0.5px solid var(--tc-stone); }
+.tc-table th { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tc-text-muted); padding: 10px 12px; text-align: left; border-bottom: 0.5px solid var(--tc-stone); }
 .tc-table td { padding: 10px 12px; color: var(--tc-ink); font-weight: 300; border-bottom: 0.5px solid var(--tc-border); }
 .tc-table tr:nth-child(even) td { background: var(--tc-chalk); }
 ```
@@ -273,14 +305,14 @@ Base unit: **8px**
   font-weight: 300;
   color: var(--tc-ink);
   background: var(--tc-white);
-  border: 0.5px solid var(--tc-stone);
+  border: 0.5px solid var(--tc-border-input);
   border-radius: 0;
   padding: 10px 14px;
   width: 100%;
   outline: none;
 }
 .tc-input:focus { border-color: var(--tc-ink); }
-.tc-input::placeholder { color: var(--tc-stone); }
+.tc-input::placeholder { color: var(--tc-text-muted); }
 ```
 
 ---
@@ -337,7 +369,8 @@ Base unit: **8px**
 | #000000 and #F2F2F2 as primary contrast pair    | Blue, green, purple as brand colors        |
 | Uppercase tracked labels for section markers    | ALL CAPS for body copy                     |
 | Linen (#EAE4D5) as surface background           | Pure white as default background           |
-| Stone (#B6B09F) for borders and muted text      | Gray or off-brand neutrals                 |
+| Stone (#B6B09F) for borders and icons           | Stone as text on Chalk, Linen, or White    |
+| Graphite (#4A453B) for muted text on light      | Gray or off-brand neutrals                 |
 | Single-weight icons (stroke, 1.5px)             | Filled/colored icon sets                   |
 
 ---
@@ -355,8 +388,12 @@ Base unit: **8px**
 
 When working on any task for The Corporate:
 1. Import the CSS custom properties block in every project
-2. Use only the four brand colors + white
+2. Use only the brand palette: Ink, Graphite, Slate, Stone, Linen, Chalk, White, and Acid Lime under its own rules
 3. Default to DM Sans 300 for all body; Playfair Display 700 for display headlines only
 4. No border-radius on structural elements (buttons, cards, containers)
 5. No gradients, shadows, or decorative fills
 6. All copy follows Section 8 voice rules — review before finalizing
+7. Muted text follows the neutral ramp in Section 3 — check the surface before picking the grey
+8. In a Tailwind project, place the `.tc-*` primitives **before** `@tailwind utilities` (or inside
+   `@layer components`). Emitted after the utilities layer, their hardcoded `color` beats any
+   `text-*` utility on the same element — which silently renders `.tc-h1 text-chalk` as black on Ink.
