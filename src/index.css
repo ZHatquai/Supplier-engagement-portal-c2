@@ -168,7 +168,7 @@ img, svg {
 .tc-select:focus,
 .tc-textarea:focus { border-color: #000000; }
 .tc-input::placeholder,
-.tc-textarea::placeholder { color: #6E6858; }
+.tc-textarea::placeholder { color: #4A453B; }
 .tc-input.tc-error,
 .tc-select.tc-error,
 .tc-textarea.tc-error { border-color: #000000; border-width: 1px; }
