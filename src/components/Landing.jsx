@@ -57,12 +57,12 @@ export default function Landing({ onStartQuestionnaire }) {
               <h2 className="tc-h2 text-[clamp(26px,3.5vw,38px)] max-w-[440px]">
                 This is driven by regulation, and by ambition.
               </h2>
-              <p className="tc-body mt-6 text-stone">
+              <p className="tc-body mt-6 text-graphite">
                 71% of The Corporate&rsquo;s total carbon footprint sits in our value chain &mdash; in
                 the products and services our Tier 1 suppliers provide. Reaching Net-Zero by 2045 is
                 not possible without visibility into, and collaboration with, our supply base.
               </p>
-              <p className="tc-body mt-4 text-stone">
+              <p className="tc-body mt-4 text-graphite">
                 This assessment is the foundation of that visibility. It is aligned with the EU&rsquo;s
                 Corporate Sustainability Reporting Directive (CSRD) and the European Sustainability
                 Reporting Standards (ESRS), both of which require companies to report on value chain
@@ -96,7 +96,7 @@ export default function Landing({ onStartQuestionnaire }) {
           <div className="text-center max-w-[560px] mx-auto mb-16">
             <p className="tc-subhead mb-4">Your Submission Path</p>
             <h2 className="tc-h2 text-[clamp(26px,3.5vw,38px)]">Two routes. One destination.</h2>
-            <p className="tc-body mt-4 text-stone text-[14px]">
+            <p className="tc-body mt-4 text-graphite text-[14px]">
               We respect your time. If you already hold a current EcoVadis Scorecard, you have an
               expedited path. Otherwise, complete the questionnaire in the portal.
             </p>
@@ -111,7 +111,7 @@ export default function Landing({ onStartQuestionnaire }) {
                 </span>
               </div>
               <div className="text-[15px] font-medium text-ink mb-3">Submit Your Scorecard</div>
-              <div className="text-[13px] font-light text-stone leading-relaxed mb-6 flex-1">
+              <div className="text-[13px] font-light text-graphite leading-relaxed mb-6 flex-1">
                 Suppliers with a current EcoVadis Scorecard (score &ge; 45) are exempt from the
                 detailed technical questionnaire. Submit your scorecard directly on EcoVadis.
                 <br />
@@ -131,12 +131,12 @@ export default function Landing({ onStartQuestionnaire }) {
             {/* Path B — Questionnaire */}
             <div className="tc-card-elevated flex flex-col">
               <div className="bg-chalk border border-stone/40 px-3 py-1 inline-block self-start mb-4">
-                <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-stone font-body">
+                <span className="text-[9px] font-medium tracking-[0.2em] uppercase text-graphite font-body">
                   Path B — Full Assessment
                 </span>
               </div>
               <div className="text-[15px] font-medium text-ink mb-3">Complete the Questionnaire</div>
-              <div className="text-[13px] font-light text-stone leading-relaxed mb-6 flex-1">
+              <div className="text-[13px] font-light text-graphite leading-relaxed mb-6 flex-1">
                 Complete the Smart Sustainability Questionnaire covering 7 sections aligned to
                 ESRS E1, E2, E3, E4, E5, S2, and G1 &mdash; filled in the portal, or downloaded,
                 completed offline, and uploaded back.
@@ -220,7 +220,7 @@ function WhyCard({ tag, title, body }) {
         <span className="text-[9px] font-medium tracking-[0.18em] uppercase text-chalk font-body">{tag}</span>
       </div>
       <div className="text-[13px] font-medium text-ink mb-1">{title}</div>
-      <div className="text-[13px] font-light leading-relaxed text-stone">{body}</div>
+      <div className="text-[13px] font-light leading-relaxed text-graphite">{body}</div>
     </div>
   )
 }
@@ -232,14 +232,14 @@ function TimelineStep({ num, title, body, date, active, last }) {
         active ? 'bg-ink' : ''
       }`}
     >
-      <div className={`font-display text-[28px] font-bold leading-none mb-2 ${active ? 'text-lime' : 'text-linen'}`}>
+      <div className={`font-display text-[28px] font-bold leading-none mb-2 ${active ? 'text-lime' : 'text-slate'}`}>
         {num}
       </div>
       <div className={`text-[13px] font-medium mb-1 ${active ? 'text-chalk' : 'text-ink'}`}>{title}</div>
-      <div className={`text-[12px] font-light leading-relaxed mb-2 ${active ? 'text-stone' : 'text-stone'}`}>
+      <div className={`text-[12px] font-light leading-relaxed mb-2 ${active ? 'text-stone' : 'text-graphite'}`}>
         {body}
       </div>
-      <div className="text-[10px] tracking-[0.14em] uppercase text-stone">{date}</div>
+      <div className={`text-[10px] tracking-[0.14em] uppercase ${active ? 'text-stone' : 'text-graphite'}`}>{date}</div>
     </div>
   )
 }
@@ -253,14 +253,14 @@ function ResourceCard({ href, label, title, desc, cta }) {
       className="tc-card-elevated no-underline flex flex-col gap-2 hover:border-ink transition-colors"
     >
       <div className="w-8 h-8 border border-stone/40 flex items-center justify-center mb-1">
-        <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-stone fill-none stroke-[1.5]">
+        <svg viewBox="0 0 24 24" className="w-4 h-4 stroke-slate fill-none stroke-[1.5]">
           <circle cx="12" cy="12" r="9" />
         </svg>
       </div>
-      <div className="text-[10px] font-normal tracking-[0.16em] uppercase text-stone">{label}</div>
+      <div className="text-[10px] font-normal tracking-[0.16em] uppercase text-graphite">{label}</div>
       <div className="text-[14px] font-medium text-ink">{title}</div>
-      <div className="text-[12px] font-light leading-relaxed text-stone flex-1">{desc}</div>
-      <div className="text-[11px] tracking-[0.12em] uppercase text-stone flex items-center gap-1.5 mt-2">
+      <div className="text-[12px] font-light leading-relaxed text-graphite flex-1">{desc}</div>
+      <div className="text-[11px] tracking-[0.12em] uppercase text-graphite flex items-center gap-1.5 mt-2">
         {cta}
         {ARROW}
       </div>

@@ -29,7 +29,7 @@ export default function Confirmation({ answers, onReturnHome }) {
                   {section.fields.map((field) => (
                     <div key={field.id} className="border-t border-stone/20 pt-3 first:border-t-0 first:pt-0">
                       <div className="tc-label mb-1">{field.label}</div>
-                      <div className={`text-[14px] font-body ${answers[field.id] ? 'text-ink font-light' : 'text-stone italic'}`}>
+                      <div className={`text-[14px] font-body ${answers[field.id] ? 'text-ink font-light' : 'text-graphite italic'}`}>
                         {answers[field.id] || 'Empty'}
                       </div>
                     </div>

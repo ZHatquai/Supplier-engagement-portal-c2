@@ -10,7 +10,7 @@ export default function Door2Review({ answers, onSubmit, onReupload }) {
         <div className="tc-page max-w-[760px]">
           <p className="tc-subhead mb-2">Door 2 — Review</p>
           <h1 className="tc-h2 text-[28px] mb-4">Check what we read from your file.</h1>
-          <p className="tc-body text-stone mb-10 max-w-[600px]">
+          <p className="tc-body text-graphite mb-10 max-w-[600px]">
             The structure matched the 2026 template. Blank answers are shown as empty below &mdash;
             review before you submit.
           </p>
@@ -26,7 +26,7 @@ export default function Door2Review({ answers, onSubmit, onReupload }) {
                   {section.fields.map((field) => (
                     <div key={field.id} className="border-t border-stone/20 pt-3 first:border-t-0 first:pt-0">
                       <div className="tc-label mb-1">{field.label}</div>
-                      <div className={`text-[14px] font-body ${answers[field.id] ? 'text-ink font-light' : 'text-stone italic'}`}>
+                      <div className={`text-[14px] font-body ${answers[field.id] ? 'text-ink font-light' : 'text-graphite italic'}`}>
                         {answers[field.id] || 'Empty'}
                       </div>
                     </div>
