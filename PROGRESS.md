@@ -15,7 +15,8 @@ Session 2 (this session). Text-contrast pass across every view, on builder feedb
 ### Session 1 Found and fixed a leftover bug from First Session Setup: the-corporate-brand SKILL.md had been committed as a raw zip archive instead of its extracted contents — re-extracted and committed correctly. Built the full v2.0 React app: Landing, Door Selection, Door 1 wizard, Door 2 upload/review/rejection, Confirmation. Derived the S1–S7 field schema directly from the xlsx (labels, ESRS refs, types, dropdown option lists, units). Wrote the Door 2 parser (strict on header row + section/question presence, lenient on blank cells). Verified via Playwright: full Door 1 submit flow, full Door 2 download→upload→review→submit flow, a rejection case with a non-matching file, and confirmed zero non-local network requests fire at any point in either flow. Fixed an Acid Lime overuse violation caught during build (was 7+ uses on the landing page; brand hard rule caps it at 2) before it shipped.
 
 ## Remaining work
-- [ ] Confirm Netlify is linked to this GitHub repo/branch and that push-to-main triggers a live build (Netlify MCP not active this session — could not verify or deploy from here)
+- [x] Netlify is linked to this GitHub repo — PR #3 built a deploy preview automatically (deploy-preview-3--supplier-engagement-portal-c2.netlify.app, commit 8ce2dee, all three Netlify checks green), which confirms the git integration. Push-to-main autodeploy follows from the same link but is only proven the first time main is pushed.
+- [ ] Builder to eyeball the deploy preview: this session's network policy blocks outbound requests to netlify.app, so the deployed build could not be opened from here. Local production build was verified in-browser instead.
 - [ ] Builder to provide real URLs for "View Document" (Supplier Code of Conduct) and "View Policy" (Global Environmental Policy) — currently `#`, see Known Issues
 - [ ] Manual mobile-viewport pass on the deployed site (built responsive throughout; not yet checked on a live phone/deployed URL)
 - [ ] Confirm live deploy: Excel downloads correctly, no 404s (Acceptance Criteria #16)
@@ -33,7 +34,7 @@ Session 2 (this session). Text-contrast pass across every view, on builder feedb
 
 ## Known issues
 - "View Document" / "View Policy" links are `#` — real URLs not yet provided (flagged to builder above).
-- Deployed URL not yet confirmed — Netlify MCP is not active in this session; push to main should trigger autodeploy per the existing GitHub↔Netlify connection, but this session could not directly verify the link is live.
+- Deployed URL not yet confirmed. The GitHub↔Netlify link is confirmed (deploy previews build on PRs), but this session cannot reach netlify.app — outbound requests to it are denied by the remote environment's network policy — so no deployed page has been opened or checked from here. Acceptance Criteria #16 (Excel downloads correctly, no 404s on the live site) still needs a human pass.
 - Vite's build warns the JS bundle exceeds the 500 kB chunk-size guideline (dominated by the `xlsx` parsing library, needed for Door 2). Not a functional issue; noted for a future pass if load time becomes a concern.
 
 ## Notes for next session
