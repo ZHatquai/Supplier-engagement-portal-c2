@@ -10,8 +10,8 @@
 | Detail | Value |
 |--------|-------|
 | Project name | The corporate live build (New) |
-| Project ID / ref | `REDACTED-PROJECT-REF` |
-| Project URL | `https://REDACTED-PROJECT-REF.supabase.co` |
+| Project ID / ref | Not recorded here — see the Supabase dashboard |
+| Project URL | Not recorded here — held only in the `SUPABASE_URL` Netlify environment variable |
 | Region | eu-central-1 (Frankfurt) — GDPR |
 | Plan | Free — pauses after roughly a week without traffic |
 | Postgres | 17 |
@@ -30,8 +30,12 @@ Function at `netlify/functions/submissions.js`, using the service role key.
 | `SUPABASE_URL` | Netlify environment variable | the submission function only |
 | `SUPABASE_SERVICE_ROLE_KEY` | Netlify environment variable | the submission function only |
 
-No anon or publishable key is used anywhere in this tool. Neither variable may appear in any
-committed file or in the client bundle.
+No anon or publishable key is used anywhere in this tool.
+
+**Neither value may appear in any committed file or in the client bundle — and neither may the
+project URL or project ref.** This repository is public. The project's identity lives in two places
+only: the Supabase dashboard, and the Netlify environment variables. Refer to it by name in
+documentation, never by ref or URL.
 
 ## Table — `submissions`
 
