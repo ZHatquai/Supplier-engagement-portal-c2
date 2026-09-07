@@ -38,7 +38,7 @@ export default function Door2Upload({ onParsed, onBack }) {
 
           <p className="tc-subhead mb-2">Door 2</p>
           <h1 className="tc-h2 text-[28px] mb-4">Download and upload.</h1>
-          <p className="tc-body text-stone mb-10 max-w-[600px]">
+          <p className="tc-body text-graphite mb-10 max-w-[600px]">
             Download the workbook, complete it offline, then upload the finished file. We check it
             against the 2026 template before showing you a review screen. Nothing is uploaded to a
             server &mdash; the file is read and checked entirely in this browser tab.
@@ -46,7 +46,7 @@ export default function Door2Upload({ onParsed, onBack }) {
 
           <div className="tc-card-elevated mb-8">
             <div className="text-[13px] font-medium text-ink mb-3 font-body">Step 1 — Download</div>
-            <p className="text-[13px] text-stone leading-relaxed mb-6">
+            <p className="text-[13px] text-graphite leading-relaxed mb-6">
               The_Corporate_Supplier_Questionnaire_2026.xlsx contains all seven sections with the
               dropdowns and instructions built in.
             </p>
@@ -57,7 +57,7 @@ export default function Door2Upload({ onParsed, onBack }) {
 
           <div className="tc-card-elevated">
             <div className="text-[13px] font-medium text-ink mb-3 font-body">Step 2 — Upload</div>
-            <p className="text-[13px] text-stone leading-relaxed mb-6">
+            <p className="text-[13px] text-graphite leading-relaxed mb-6">
               Accepted formats: .xlsx or .csv. Blank cells in an otherwise matching file are fine
               &mdash; you will see the gaps on the review screen before submitting.
             </p>
@@ -69,13 +69,13 @@ export default function Door2Upload({ onParsed, onBack }) {
               className="tc-input cursor-pointer"
               disabled={parsing}
             />
-            {parsing && <p className="text-[12px] text-stone mt-3">Reading file&hellip;</p>}
+            {parsing && <p className="text-[12px] text-graphite mt-3">Reading file&hellip;</p>}
           </div>
 
           {rejection && (
             <div className="tc-card-elevated mt-8 border-l-2 border-l-ink">
               <div className="text-[13px] font-medium text-ink mb-2 font-body">File not accepted</div>
-              <p className="text-[13px] text-stone leading-relaxed mb-4">{rejection}</p>
+              <p className="text-[13px] text-graphite leading-relaxed mb-4">{rejection}</p>
               <div className="flex gap-3 flex-wrap">
                 <a href={XLSX_ASSET} download className="tc-btn-secondary">
                   Re-download the template
