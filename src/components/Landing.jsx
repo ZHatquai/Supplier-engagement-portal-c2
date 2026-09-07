@@ -8,7 +8,7 @@ const ARROW = (
   </svg>
 )
 
-export default function Landing({ onStartQuestionnaire }) {
+export default function Landing({ onStartEcoVadis, onStartQuestionnaire }) {
   return (
     <div>
       <Nav />
@@ -113,19 +113,15 @@ export default function Landing({ onStartQuestionnaire }) {
               <div className="text-[15px] font-medium text-ink mb-3">Submit Your Scorecard</div>
               <div className="text-[13px] font-light text-graphite leading-relaxed mb-6 flex-1">
                 Suppliers with a current EcoVadis Scorecard (score &ge; 45) are exempt from the
-                detailed technical questionnaire. Submit your scorecard directly on EcoVadis.
+                detailed technical questionnaire. Give us your contact details and scorecard link,
+                and we will take you straight to EcoVadis.
                 <br />
                 <br />
                 Estimated time: <strong className="text-ink font-medium">5 minutes</strong>
               </div>
-              <a
-                href="https://ecovadis.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="tc-btn-primary w-full text-center block"
-              >
+              <button onClick={onStartEcoVadis} className="tc-btn-primary w-full text-center block">
                 Submit EcoVadis Scorecard
-              </a>
+              </button>
             </div>
 
             {/* Path B — Questionnaire */}
@@ -137,7 +133,7 @@ export default function Landing({ onStartQuestionnaire }) {
               </div>
               <div className="text-[15px] font-medium text-ink mb-3">Complete the Questionnaire</div>
               <div className="text-[13px] font-light text-graphite leading-relaxed mb-6 flex-1">
-                Complete the Smart Sustainability Questionnaire covering 7 sections aligned to
+                Complete the Smart Sustainability Questionnaire covering 6 sections aligned to
                 ESRS E1, E2, E3, E4, E5, S2, and G1 &mdash; filled in the portal, or downloaded,
                 completed offline, and uploaded back.
                 <br />
