@@ -6,6 +6,9 @@ export default {
       colors: {
         ink: '#000000',
         stone: '#B6B09F',
+        // Readable muted text on light surfaces — Stone is borders/icons and dark-background text only.
+        graphite: '#4A453B',
+        slate: '#8C8674',
         linen: '#EAE4D5',
         chalk: '#F2F2F2',
         white: '#FFFFFF',
