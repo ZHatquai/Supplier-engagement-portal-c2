@@ -1,64 +1,139 @@
 import { useState } from 'react'
 import Landing from './components/Landing'
+import EcoVadisCapture from './components/EcoVadisCapture'
+import QuestionnaireCapture from './components/QuestionnaireCapture'
 import DoorSelection from './components/DoorSelection'
 import Door1Wizard from './components/Door1Wizard'
 import Door2Upload from './components/Door2Upload'
-import Door2Review from './components/Door2Review'
+import ReviewSubmit from './components/ReviewSubmit'
 import Confirmation from './components/Confirmation'
+import { EMPTY_CONTACT } from './data/contactSchema'
+import { SECTIONS } from './data/questionnaireSchema'
 
-// Views: 'landing' | 'doors' | 'door1' | 'door2-upload' | 'door2-review' | 'confirmation'
-// All state lives here, in memory, for the life of the tab. Nothing is persisted
-// and no network call ever carries an answer — see CLAUDE.md Hard Rules.
+// Views:
+//   'landing' | 'ecovadis' | 'questionnaire-capture' | 'doors'
+//   | 'door1' | 'door2-upload' | 'review' | 'confirmation'
+//
+// Identity and answers live here for the life of the tab. The Questionnaire
+// route writes nothing until final submit on the Review screen; the EcoVadis
+// route writes from its own capture screen. Every write goes through the
+// server-side Netlify Function — see CLAUDE.md Hard Rules.
 
 export default function App() {
   const [view, setView] = useState('landing')
+  const [contact, setContact] = useState(EMPTY_CONTACT)
   const [answers, setAnswers] = useState({})
+  const [door, setDoor] = useState(null)
+  const [wizardSection, setWizardSection] = useState(0)
+  const [submission, setSubmission] = useState(null)
 
   function goHome() {
     setView('landing')
+    setContact(EMPTY_CONTACT)
     setAnswers({})
+    setDoor(null)
+    setWizardSection(0)
+    setSubmission(null)
+  }
+
+  function handleCaptureContinue(values) {
+    setContact(values)
+    setView('doors')
   }
 
   function handleDoor1Submit(submittedAnswers) {
     setAnswers(submittedAnswers)
-    setView('confirmation')
+    setDoor('door1')
+    setView('review')
   }
 
   function handleDoor2Parsed(parsedAnswers) {
     setAnswers(parsedAnswers)
-    setView('door2-review')
+    setDoor('door2')
+    setView('review')
   }
 
-  function handleDoor2Submit() {
+  function handleReviewBack() {
+    if (door === 'door2') {
+      // Discard the parsed answers along with the file — no upload is retained after parsing.
+      setAnswers({})
+      setView('door2-upload')
+      return
+    }
+    setWizardSection(SECTIONS.length - 1)
+    setView('door1')
+  }
+
+  function handleSubmitted(row) {
+    setSubmission(row)
     setView('confirmation')
-  }
-
-  function handleDoor2Reupload() {
-    // Discard the parsed answers along with the file — no upload is retained after parsing.
-    setAnswers({})
-    setView('door2-upload')
   }
 
   switch (view) {
     case 'landing':
-      return <Landing onStartQuestionnaire={() => setView('doors')} />
-    case 'doors':
       return (
-        <DoorSelection
-          onSelectDoor1={() => setView('door1')}
-          onSelectDoor2={() => setView('door2-upload')}
+        <Landing
+          onStartEcoVadis={() => setView('ecovadis')}
+          onStartQuestionnaire={() => setView('questionnaire-capture')}
+        />
+      )
+    case 'ecovadis':
+      return <EcoVadisCapture onBack={goHome} />
+    case 'questionnaire-capture':
+      return (
+        <QuestionnaireCapture
+          initialValues={contact}
+          onContinue={handleCaptureContinue}
           onBack={goHome}
         />
       )
+    case 'doors':
+      return (
+        <DoorSelection
+          onSelectDoor1={() => {
+            setWizardSection(0)
+            setView('door1')
+          }}
+          onSelectDoor2={() => setView('door2-upload')}
+          onBack={() => setView('questionnaire-capture')}
+        />
+      )
     case 'door1':
-      return <Door1Wizard onSubmit={handleDoor1Submit} onBack={() => setView('doors')} />
+      return (
+        <Door1Wizard
+          initialAnswers={answers}
+          initialSectionIndex={wizardSection}
+          onSubmit={handleDoor1Submit}
+          onBack={() => setView('doors')}
+        />
+      )
     case 'door2-upload':
       return <Door2Upload onParsed={handleDoor2Parsed} onBack={() => setView('doors')} />
-    case 'door2-review':
-      return <Door2Review answers={answers} onSubmit={handleDoor2Submit} onReupload={handleDoor2Reupload} />
+    case 'review':
+      return (
+        <ReviewSubmit
+          door={door}
+          contact={contact}
+          answers={answers}
+          onBack={handleReviewBack}
+          onSubmitted={handleSubmitted}
+        />
+      )
     case 'confirmation':
-      return <Confirmation answers={answers} onReturnHome={goHome} />
+      return (
+        <Confirmation
+          contact={contact}
+          answers={answers}
+          submission={submission}
+          onReturnHome={goHome}
+        />
+      )
     default:
-      return <Landing onStartQuestionnaire={() => setView('doors')} />
+      return (
+        <Landing
+          onStartEcoVadis={() => setView('ecovadis')}
+          onStartQuestionnaire={() => setView('questionnaire-capture')}
+        />
+      )
   }
 }

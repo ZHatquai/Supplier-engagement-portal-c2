@@ -40,14 +40,15 @@ export default function Door2Upload({ onParsed, onBack }) {
           <h1 className="tc-h2 text-[28px] mb-4">Download and upload.</h1>
           <p className="tc-body text-graphite mb-10 max-w-[600px]">
             Download the workbook, complete it offline, then upload the finished file. We check it
-            against the 2026 template before showing you a review screen. Nothing is uploaded to a
-            server &mdash; the file is read and checked entirely in this browser tab.
+            against the 2026 template before showing you a review screen. The file itself is never
+            uploaded to a server &mdash; it is read in this browser tab and discarded once your
+            answers are on screen.
           </p>
 
           <div className="tc-card-elevated mb-8">
             <div className="text-[13px] font-medium text-ink mb-3 font-body">Step 1 — Download</div>
             <p className="text-[13px] text-graphite leading-relaxed mb-6">
-              The_Corporate_Supplier_Questionnaire_2026.xlsx contains all seven sections with the
+              The_Corporate_Supplier_Questionnaire_2026.xlsx contains Sections S2&ndash;S7 with the
               dropdowns and instructions built in.
             </p>
             <a href={XLSX_ASSET} download className="tc-btn-secondary inline-block">
