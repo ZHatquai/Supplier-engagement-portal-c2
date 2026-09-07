@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+
+/* Custom primitives sit before the utilities layer so Tailwind utilities
+   (e.g. text-chalk on a .tc-h1) always win over the defaults set here. */
 
 * {
   box-sizing: border-box;
@@ -69,7 +71,7 @@ img, svg {
   line-height: 1.4;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #B6B09F;
+  color: #4A453B;
 }
 
 .tc-body {
@@ -87,7 +89,7 @@ img, svg {
   line-height: 1.5;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #B6B09F;
+  color: #4A453B;
 }
 
 .tc-btn-primary {
@@ -137,14 +139,14 @@ img, svg {
   text-transform: uppercase;
   text-decoration: none;
   background: transparent;
-  color: #B6B09F;
-  border: 0.5px solid #B6B09F;
+  color: #4A453B;
+  border: 0.5px solid #4A453B;
   border-radius: 0;
   padding: 12px 28px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
-.tc-btn-ghost:hover { color: #000000; border-color: #000000; }
+.tc-btn-ghost:hover { color: #000000; border-color: #000000; background: #EAE4D5; }
 
 .tc-divider { height: 0.5px; background: rgba(182,176,159,0.35); margin: 40px 0; }
 
@@ -156,7 +158,7 @@ img, svg {
   font-weight: 300;
   color: #000000;
   background: #FFFFFF;
-  border: 0.5px solid #B6B09F;
+  border: 0.5px solid #8C8674;
   border-radius: 0;
   padding: 10px 14px;
   width: 100%;
@@ -166,7 +168,7 @@ img, svg {
 .tc-select:focus,
 .tc-textarea:focus { border-color: #000000; }
 .tc-input::placeholder,
-.tc-textarea::placeholder { color: #B6B09F; }
+.tc-textarea::placeholder { color: #4A453B; }
 .tc-input.tc-error,
 .tc-select.tc-error,
 .tc-textarea.tc-error { border-color: #000000; border-width: 1px; }
@@ -192,3 +194,5 @@ img, svg {
   text-underline-offset: 3px;
   color: #000000;
 }
+
+@tailwind utilities;

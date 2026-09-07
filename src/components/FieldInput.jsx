@@ -11,7 +11,7 @@ export default function FieldInput({ field, value, error, onChange, disabled }) 
       <label htmlFor={field.id} className="tc-label block mb-2">
         {field.label}
         {field.required && <span className="text-ink"> *</span>}
-        {field.unit && <span className="normal-case tracking-normal text-stone"> &nbsp;({field.unit})</span>}
+        {field.unit && <span className="normal-case tracking-normal text-graphite"> &nbsp;({field.unit})</span>}
       </label>
 
       {field.type === 'text' && (
@@ -38,7 +38,7 @@ export default function FieldInput({ field, value, error, onChange, disabled }) 
       )}
 
       {field.flag && value === field.flag.equals && (
-        <p className="text-[11px] text-stone mt-2 border-l-2 border-lime pl-3">{field.flag.note}</p>
+        <p className="text-[11px] text-graphite mt-2 border-l-2 border-lime pl-3">{field.flag.note}</p>
       )}
 
       {error && <p className="text-[12px] text-ink mt-2">{error}</p>}

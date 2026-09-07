@@ -59,7 +59,7 @@ export default function Door1Wizard({ onSubmit, onBack }) {
             {SECTIONS.map((s, i) => (
               <div key={s.id} className="flex-1">
                 <div className={`h-[3px] ${i <= sectionIndex ? 'bg-ink' : 'bg-stone/30'}`} />
-                <div className={`text-[10px] mt-1.5 tracking-[0.1em] uppercase ${i === sectionIndex ? 'text-ink' : 'text-stone'}`}>
+                <div className={`text-[10px] mt-1.5 tracking-[0.1em] uppercase ${i === sectionIndex ? 'text-ink' : 'text-graphite'}`}>
                   {s.id}
                 </div>
               </div>
@@ -68,7 +68,7 @@ export default function Door1Wizard({ onSubmit, onBack }) {
 
           <p className="tc-subhead mb-2">{section.esrs}</p>
           <h1 className="tc-h2 text-[28px] mb-2">{section.title}</h1>
-          <p className="text-[13px] text-stone mb-10">
+          <p className="text-[13px] text-graphite mb-10">
             Section {sectionIndex + 1} of {SECTIONS.length}. Fields marked * are required.
           </p>
 
