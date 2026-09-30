@@ -2,7 +2,7 @@
 
 > Claude Code: read this file at the start of every session, before touching anything. Update it at every save point. Replace content — do not append. History lives in git.
 
-**Session:** 3 — post-build confirmation attempt
+**Session:** 3 — live submissions confirmed
 **Last updated:** 30 September 2026 — by Claude Code, end of session 3
 **Live URL:** Not yet confirmed for v3.0. Netlify autodeploys from main; the deploy will not work until the two Supabase environment variables are set (see Remaining work).
 
@@ -16,11 +16,11 @@ The database is live: project **The corporate live build (New)** (eu-central-1; 
 S1 is gone everywhere: the shipped workbook is S2–S7 only, `questionnaireSchema.js` has no `s1_` fields and no conditional-field logic left, the wizard starts at S2, and the function rejects any `s1_` answer key.
 
 ## Last session
-Session 3. Attempted the four post-build confirmations. None could be completed from the build sandbox, so none are ticked. No code changed. (1) No live URL is recorded anywhere in the repo, and the sandbox cannot submit to a deployed site, so the live-deploy check is still open. (2) The Excel download check needs the same URL. (3) "View Document" / "View Policy" are still `href="#"` at `src/components/Landing.jsx:174` and `:181`; real URLs have not been supplied. (4) The mobile pass on the deployed site needs a real device or the live URL. Read-only check of `submissions` in Supabase: 32 rows, all dated 5 June to 9 July 2026, all at 07:20 UTC, i.e. before the project was created (7 Sept). Zero rows since creation, so no real submission has reached the database yet. Those 32 rows look like seed or test data (see Known issues).
+Session 3. Builder set the Netlify env vars and tested the live site. Read-only check of `submissions` in Supabase confirmed three new rows on 30 Sept 2026 (08:55 to 08:56 UTC): two `questionnaire` and one `ecovadis`, all `active`, all six identity fields populated, the EcoVadis row carries a link and the questionnaire rows carry answers. Three distinct companies, so `active` on each is the correct status. This confirms the env vars, the PostgREST call (previously untestable from the sandbox) and both routes end to end. Still open: Excel download on the deployed site, real "View Document" / "View Policy" URLs (`Landing.jsx:174`, `:181`), manual mobile pass, and the 32 pre-existing rows. No code changed.
 
 ## Remaining work
-- [ ] **Builder: confirm `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are set as Netlify environment variables**, then trigger a redeploy if they were added after the last build. Until they are, every submission fails with "The submission service is not configured." Do not paste either value into this file, any doc, or any commit — this repo is public.
-- [ ] Confirm the live v3.0 deploy: submit once on each route against the real database, then check the rows in the Supabase table editor (a real submission will show a `created_at` after 7 Sept 2026)
+- [x] `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` set in Netlify (confirmed by live rows, 30 Sept 2026)
+- [x] Live v3.0 deploy confirmed: one EcoVadis and two questionnaire submissions landed in Supabase on 30 Sept 2026
 - [ ] Confirm the Excel download works on the deployed site and returns the S1-free workbook (S2–S7 only)
 - [ ] Builder to provide real URLs for "View Document" (Supplier Code of Conduct) and "View Policy" (Global Environmental Policy) — still `#`, see Known Issues
 - [ ] Manual mobile-viewport pass on the deployed site (automated 375px pass is green locally)
@@ -44,10 +44,10 @@ Session 3. Attempted the four post-build confirmations. None could be completed 
 - The workbook's STATUS column dropdown still offers "EcoVadis Bypass" as a value. Cosmetic only; the parser reads column E, never column G. Worth removing in Excel at the next workbook edit.
 - The landing page uses Acid Lime three times (headline underline, EcoVadis card badge, active timeline numeral) against a brand limit of two per page. Pre-existing from v2.0 and left alone because v3.0 scoped landing changes to the EcoVadis button and the two inaccurate storage claims. One of the three should be dropped in a future pass.
 - The landing page's "Why We Are Asking" and "What happens next" sections sit on `bg-white`, where the brand calls for Chalk or Linen. Pre-existing from v2.0, same reasoning.
-- The PostgREST HTTP call itself could not be exercised from the build sandbox — its network policy blocks `*.supabase.co`, and the Supabase MCP does not go through PostgREST. The request shape follows Supabase's documented RPC convention and the handler is unit-tested against a stub; the first live submission after the env vars are set is the real confirmation.
 - Vite warns the JS bundle exceeds the 500 kB chunk-size guideline (dominated by `xlsx`, needed for Door 2). Not functional; worth a code-split if load time becomes a concern.
 - The Supabase security advisor reports `rls_enabled_no_policy` on `submissions`. Intended — deny-all is the design.
 
 ## Notes for next session
-- Builder to supply: the live Netlify URL, confirmation that the two env vars are set, and the real URLs for "View Document" and "View Policy". With the URL, run the live checks (one submission per route, Excel download, mobile pass) and replace `#` in `Landing.jsx`.
-- Decide whether the 32 pre-existing `submissions` rows are to be deleted.
+- Builder to supply: the two real URLs for "View Document" and "View Policy", then replace `#` in `Landing.jsx`.
+- Builder to confirm the Excel download and mobile pass on the deployed site.
+- Decide whether the 32 pre-existing `submissions` rows, and today's 3 test rows, are to be deleted before real use.
