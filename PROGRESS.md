@@ -2,8 +2,8 @@
 
 > Claude Code: read this file at the start of every session, before touching anything. Update it at every save point. Replace content — do not append. History lives in git.
 
-**Session:** 2 — v3.0 build complete
-**Last updated:** 7 September 2026 — by Claude Code, end of session 2
+**Session:** 3 — live submissions confirmed
+**Last updated:** 30 September 2026 — by Claude Code, end of session 3
 **Live URL:** Not yet confirmed for v3.0. Netlify autodeploys from main; the deploy will not work until the two Supabase environment variables are set (see Remaining work).
 
 ## Current state
@@ -16,14 +16,15 @@ The database is live: project **The corporate live build (New)** (eu-central-1; 
 S1 is gone everywhere: the shipped workbook is S2–S7 only, `questionnaireSchema.js` has no `s1_` fields and no conditional-field logic left, the wizard starts at S2, and the function rejects any `s1_` answer key.
 
 ## Last session
-Session 2 (v3.0 build). Installed the v3.0 spec, CLAUDE.md and PROGRESS.md; applied the schema, the two RPC functions and the RLS lockdown to the live Supabase project via MCP and verified all four status rules against it. Patched the row-4 workbook instructions that still referenced the retired S1 bypass, then shipped the workbook and re-derived Door 1's schema and Door 2's parser from it. Built both capture screens, the shared Review/consent screen, the duplicate warning, and the submission Netlify Function. Wrote three verification scripts (`npm run verify` plus a browser walkthrough) — all passing. Confirmed no Supabase reference reaches the client bundle and no browser request reaches Supabase.
+Session 3. Builder set the Netlify env vars and tested the live site. Read-only check of `submissions` in Supabase confirmed three new rows on 30 Sept 2026 (08:55 to 08:56 UTC): two `questionnaire` and one `ecovadis`, all `active`, all six identity fields populated, the EcoVadis row carries a link and the questionnaire rows carry answers. Three distinct companies, so `active` on each is the correct status. This confirms the env vars, the PostgREST call (previously untestable from the sandbox) and both routes end to end. Still open: Excel download on the deployed site, real "View Document" / "View Policy" URLs (`Landing.jsx:174`, `:181`), manual mobile pass, and the 32 pre-existing rows. No code changed.
 
 ## Remaining work
-- [ ] **Builder: add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as Netlify environment variables.** Until this is done every submission fails with "The submission service is not configured." Both values come from Supabase → Project Settings → API. Do not paste either into this file, any doc, or any commit — this repo is public.
-- [ ] Confirm the live v3.0 deploy: submit once on each route against the real database, then check the rows in the Supabase table editor
-- [ ] Confirm the Excel download works on the deployed site and returns the S1-free workbook
+- [x] `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` set in Netlify (confirmed by live rows, 30 Sept 2026)
+- [x] Live v3.0 deploy confirmed: one EcoVadis and two questionnaire submissions landed in Supabase on 30 Sept 2026
+- [ ] Confirm the Excel download works on the deployed site and returns the S1-free workbook (S2–S7 only)
 - [ ] Builder to provide real URLs for "View Document" (Supplier Code of Conduct) and "View Policy" (Global Environmental Policy) — still `#`, see Known Issues
 - [ ] Manual mobile-viewport pass on the deployed site (automated 375px pass is green locally)
+- [ ] Builder to decide what to do with the 32 pre-existing rows in `submissions` (see Known issues) before real use
 
 ## Build decisions
 - Plain Tailwind utility classes + shared `.tc-*` primitives in `src/index.css` instead of shadcn/ui — shadcn's rounded/shadowed defaults would need overriding on every primitive to match the brand.
@@ -38,13 +39,15 @@ Session 2 (v3.0 build). Installed the v3.0 spec, CLAUDE.md and PROGRESS.md; appl
 - `scripts/` holds three verification tools, run with a small loader shim because Node does not resolve the extensionless imports Vite accepts. `npm run verify` runs the two non-browser suites.
 
 ## Known issues
+- `submissions` holds 32 rows dated 5 June to 9 July 2026, all at 07:20 UTC, all created before the project itself (7 Sept 2026). Session 2 deleted its own test rows, so these came from elsewhere and look like seed data. They contain personal-data fields and will mix with real submissions and affect duplicate matching by company name. Not touched this session; the builder should delete them via the Supabase table editor if they are not real.
 - "View Document" / "View Policy" links are `#` — real URLs not yet provided.
 - The workbook's STATUS column dropdown still offers "EcoVadis Bypass" as a value. Cosmetic only; the parser reads column E, never column G. Worth removing in Excel at the next workbook edit.
 - The landing page uses Acid Lime three times (headline underline, EcoVadis card badge, active timeline numeral) against a brand limit of two per page. Pre-existing from v2.0 and left alone because v3.0 scoped landing changes to the EcoVadis button and the two inaccurate storage claims. One of the three should be dropped in a future pass.
 - The landing page's "Why We Are Asking" and "What happens next" sections sit on `bg-white`, where the brand calls for Chalk or Linen. Pre-existing from v2.0, same reasoning.
-- The PostgREST HTTP call itself could not be exercised from the build sandbox — its network policy blocks `*.supabase.co`, and the Supabase MCP does not go through PostgREST. The request shape follows Supabase's documented RPC convention and the handler is unit-tested against a stub; the first live submission after the env vars are set is the real confirmation.
 - Vite warns the JS bundle exceeds the 500 kB chunk-size guideline (dominated by `xlsx`, needed for Door 2). Not functional; worth a code-split if load time becomes a concern.
 - The Supabase security advisor reports `rls_enabled_no_policy` on `submissions`. Intended — deny-all is the design.
 
 ## Notes for next session
-None.
+- Builder to supply: the two real URLs for "View Document" and "View Policy", then replace `#` in `Landing.jsx`.
+- Builder to confirm the Excel download and mobile pass on the deployed site.
+- Decide whether the 32 pre-existing `submissions` rows, and today's 3 test rows, are to be deleted before real use.
