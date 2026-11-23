@@ -50,3 +50,8 @@ Session 4. Builder asked for a "Test build" line in the landing page footer. `Fo
 - The Supabase security advisor reports `rls_enabled_no_policy` on `submissions`. Intended — deny-all is the design.
 
 ## Notes for next session
+Paused 23 November 2026, session 4. The "Test build" footer line is built, pushed on `claude/determined-wright-hb08br`, and open as draft pull request ZHatquai/Supplier-engagement-portal-c2#7. Nothing is left to build for it.
+1. (Builder) Merge pull request #7 on GitHub.
+2. (Builder) After the Netlify deploy, check that the landing page footer shows "Test build". The other screens shouldn't.
+3. (Builder) Run the Project Governor (v3.7+) to create `docs/checks.md`.
+4. Then go back to Remaining work: the View Document / View Policy URLs, the Excel download and mobile check, and the old `submissions` rows.
