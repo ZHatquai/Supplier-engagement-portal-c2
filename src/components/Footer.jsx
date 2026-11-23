@@ -24,7 +24,7 @@ export default function Footer({ testBuild = false }) {
       <div className="tc-page flex items-center justify-between flex-wrap gap-4">
         <div className="text-[10px] font-light text-stone tracking-[0.1em]">
           © 2026 The Corporate. Confidential. For Tier 1 Supplier use only.
-          {testBuild && <div className="mt-1">Test build</div>}
+          {testBuild && <div className="mt-1">Test build 2</div>}
         </div>
         <div className="inline-block border border-stone/30 px-2.5 py-1">
           <span className="text-[9px] tracking-[0.16em] uppercase text-stone">ESRS Compliant · CSRD 2026</span>

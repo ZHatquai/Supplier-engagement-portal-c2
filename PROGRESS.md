@@ -2,8 +2,8 @@
 
 > Claude Code: read this file at the start of every session, before touching anything. Update it at every save point. Replace content — do not append. History lives in git.
 
-**Session:** 4 — "Test build" footer line
-**Last updated:** 23 November 2026 — by Claude Code, session 4
+**Session:** 5 — footer line changed to "Test build 2"
+**Last updated:** 23 November 2026 — by Claude Code, session 5
 **Live URL:** Not yet confirmed for v3.0. Netlify autodeploys from main; the deploy will not work until the two Supabase environment variables are set (see Remaining work).
 
 ## Current state
@@ -16,7 +16,7 @@ The database is live: project **The corporate live build (New)** (eu-central-1; 
 S1 is gone everywhere: the shipped workbook is S2–S7 only, `questionnaireSchema.js` has no `s1_` fields and no conditional-field logic left, the wizard starts at S2, and the function rejects any `s1_` answer key.
 
 ## Last session
-Session 4. Builder asked for a "Test build" line in the landing page footer. `Footer.jsx` now takes an optional `testBuild` prop that adds the line under the © line in the same Stone style; only `Landing.jsx` passes it, so the other seven screens are unchanged. `npm run build` passes. The three older `claude/` branches were checked against main and are leftovers (older, no shared history), not unfinished work. `docs/checks.md` is still missing, so nothing can be reported done against checks yet.
+Session 5 (fix lane). Plan, given by the builder: continue the paused footer work and change the line from "Test build" to "Test build 2". Merged `claude/determined-wright-hb08br` (session 4) into `claude/ecstatic-gauss-uzclh4`, changed the text in `Footer.jsx`; still shown on the landing page only. `npm run build` passes. This branch's pull request replaces #7. Dark mode was raised and parked on the backlog: it needs a spec change and brand decisions first. `docs/checks.md` is still missing.
 
 ## Remaining work
 - [x] `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` set in Netlify (confirmed by live rows, 30 Sept 2026)
@@ -25,7 +25,7 @@ Session 4. Builder asked for a "Test build" line in the landing page footer. `Fo
 - [ ] Builder to provide real URLs for "View Document" (Supplier Code of Conduct) and "View Policy" (Global Environmental Policy) — still `#`, see Known Issues
 - [ ] Manual mobile-viewport pass on the deployed site (automated 375px pass is green locally)
 - [ ] Builder to decide what to do with the 32 pre-existing rows in `submissions`, and the 3 session-3 test rows (see Known issues), before real use
-- [ ] Remove the "Test build" footer line (`<Footer testBuild />` in `Landing.jsx`) before real use
+- [ ] Remove the "Test build 2" footer line (`<Footer testBuild />` in `Landing.jsx`) before real use
 - [ ] Builder to run the Project Governor (v3.7+) to create `docs/checks.md`
 
 ## Build decisions
@@ -49,9 +49,7 @@ Session 4. Builder asked for a "Test build" line in the landing page footer. `Fo
 - Vite warns the JS bundle exceeds the 500 kB chunk-size guideline (dominated by `xlsx`, needed for Door 2). Not functional; worth a code-split if load time becomes a concern.
 - The Supabase security advisor reports `rls_enabled_no_policy` on `submissions`. Intended — deny-all is the design.
 
+## Backlog
+- Dark mode. Not in spec v3.0 and the brand skill has no dark palette. Needs: Tool Architect iteration + Project Governor, and brand sign-off on dark page and surface colours, hairline colour, and the Acid Lime rule on dark surfaces. Then a build plan.
+
 ## Notes for next session
-Paused 23 November 2026, session 4. The "Test build" footer line is built, pushed on `claude/determined-wright-hb08br`, and open as draft pull request ZHatquai/Supplier-engagement-portal-c2#7. Nothing is left to build for it.
-1. (Builder) Merge pull request #7 on GitHub.
-2. (Builder) After the Netlify deploy, check that the landing page footer shows "Test build". The other screens shouldn't.
-3. (Builder) Run the Project Governor (v3.7+) to create `docs/checks.md`.
-4. Then go back to Remaining work: the View Document / View Policy URLs, the Excel download and mobile check, and the old `submissions` rows.
