@@ -195,7 +195,7 @@ export default function Landing({ onStartEcoVadis, onStartQuestionnaire }) {
         </div>
       </section>
 
-      <Footer />
+      <Footer testBuild />
     </div>
   )
 }

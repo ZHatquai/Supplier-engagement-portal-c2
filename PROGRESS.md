@@ -2,8 +2,8 @@
 
 > Claude Code: read this file at the start of every session, before touching anything. Update it at every save point. Replace content — do not append. History lives in git.
 
-**Session:** 3 — live submissions confirmed
-**Last updated:** 30 September 2026 — by Claude Code, end of session 3
+**Session:** 4 — "Test build" footer line
+**Last updated:** 23 November 2026 — by Claude Code, session 4
 **Live URL:** Not yet confirmed for v3.0. Netlify autodeploys from main; the deploy will not work until the two Supabase environment variables are set (see Remaining work).
 
 ## Current state
@@ -16,7 +16,7 @@ The database is live: project **The corporate live build (New)** (eu-central-1; 
 S1 is gone everywhere: the shipped workbook is S2–S7 only, `questionnaireSchema.js` has no `s1_` fields and no conditional-field logic left, the wizard starts at S2, and the function rejects any `s1_` answer key.
 
 ## Last session
-Session 3. Builder set the Netlify env vars and tested the live site. Read-only check of `submissions` in Supabase confirmed three new rows on 30 Sept 2026 (08:55 to 08:56 UTC): two `questionnaire` and one `ecovadis`, all `active`, all six identity fields populated, the EcoVadis row carries a link and the questionnaire rows carry answers. Three distinct companies, so `active` on each is the correct status. This confirms the env vars, the PostgREST call (previously untestable from the sandbox) and both routes end to end. Still open: Excel download on the deployed site, real "View Document" / "View Policy" URLs (`Landing.jsx:174`, `:181`), manual mobile pass, and the 32 pre-existing rows. No code changed.
+Session 4. Builder asked for a "Test build" line in the landing page footer. `Footer.jsx` now takes an optional `testBuild` prop that adds the line under the © line in the same Stone style; only `Landing.jsx` passes it, so the other seven screens are unchanged. `npm run build` passes. The three older `claude/` branches were checked against main and are leftovers (older, no shared history), not unfinished work. `docs/checks.md` is still missing, so nothing can be reported done against checks yet.
 
 ## Remaining work
 - [x] `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` set in Netlify (confirmed by live rows, 30 Sept 2026)
@@ -24,7 +24,9 @@ Session 3. Builder set the Netlify env vars and tested the live site. Read-only 
 - [ ] Confirm the Excel download works on the deployed site and returns the S1-free workbook (S2–S7 only)
 - [ ] Builder to provide real URLs for "View Document" (Supplier Code of Conduct) and "View Policy" (Global Environmental Policy) — still `#`, see Known Issues
 - [ ] Manual mobile-viewport pass on the deployed site (automated 375px pass is green locally)
-- [ ] Builder to decide what to do with the 32 pre-existing rows in `submissions` (see Known issues) before real use
+- [ ] Builder to decide what to do with the 32 pre-existing rows in `submissions`, and the 3 session-3 test rows (see Known issues), before real use
+- [ ] Remove the "Test build" footer line (`<Footer testBuild />` in `Landing.jsx`) before real use
+- [ ] Builder to run the Project Governor (v3.7+) to create `docs/checks.md`
 
 ## Build decisions
 - Plain Tailwind utility classes + shared `.tc-*` primitives in `src/index.css` instead of shadcn/ui — shadcn's rounded/shadowed defaults would need overriding on every primitive to match the brand.
@@ -48,6 +50,3 @@ Session 3. Builder set the Netlify env vars and tested the live site. Read-only 
 - The Supabase security advisor reports `rls_enabled_no_policy` on `submissions`. Intended — deny-all is the design.
 
 ## Notes for next session
-- Builder to supply: the two real URLs for "View Document" and "View Policy", then replace `#` in `Landing.jsx`.
-- Builder to confirm the Excel download and mobile pass on the deployed site.
-- Decide whether the 32 pre-existing `submissions` rows, and today's 3 test rows, are to be deleted before real use.

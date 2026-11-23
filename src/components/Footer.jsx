@@ -1,4 +1,4 @@
-export default function Footer() {
+export default function Footer({ testBuild = false }) {
   return (
     <footer className="bg-ink pt-16 pb-16 border-t border-white/[0.06]">
       <div className="tc-page flex items-start justify-between gap-10 flex-wrap">
@@ -24,6 +24,7 @@ export default function Footer() {
       <div className="tc-page flex items-center justify-between flex-wrap gap-4">
         <div className="text-[10px] font-light text-stone tracking-[0.1em]">
           © 2026 The Corporate. Confidential. For Tier 1 Supplier use only.
+          {testBuild && <div className="mt-1">Test build</div>}
         </div>
         <div className="inline-block border border-stone/30 px-2.5 py-1">
           <span className="text-[9px] tracking-[0.16em] uppercase text-stone">ESRS Compliant · CSRD 2026</span>
